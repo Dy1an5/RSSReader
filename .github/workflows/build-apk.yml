@@ -40,10 +40,10 @@ jobs:
           packages: 'platforms;android-34 build-tools;34.0.0'
 
       - name: Capacitor add Android platform
-        run: npx cap add android
+        run: ./node_modules/.bin/cap add android
 
       - name: Capacitor sync
-        run: npx cap sync android
+        run: ./node_modules/.bin/cap sync android
 
       - name: Build APK
         working-directory: android
