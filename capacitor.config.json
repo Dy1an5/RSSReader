@@ -1,0 +1,13 @@
+{
+  "appId": "com.rssreader.app",
+  "appName": "RSS Reader",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true,
+    "hostname": "localhost"
+  },
+  "android": {
+    "allowMixedContent": true
+  }
+}

@@ -1,0 +1,5 @@
+node_modules/
+dist/
+server/rss.db
+android/
+.DS_Store

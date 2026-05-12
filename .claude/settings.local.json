@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node ./node_modules/vite/bin/vite.js --port 5200)",
+      "Bash(curl -s --max-time 8 \"http://localhost:5200/cors-proxy?url=https%3A%2F%2Fimjuya.github.io%2Fjuya-ai-daily%2Frss.xml\")",
+      "Bash(kill %1)",
+      "Bash(node ./node_modules/vite/bin/vite.js --port 5201)",
+      "Bash(curl -s --max-time 8 \"http://localhost:5201/cors-proxy?url=https%3A%2F%2Fimjuya.github.io%2Fjuya-ai-daily%2Frss.xml\")",
+      "Bash(node ./node_modules/vite/bin/vite.js --port 5204)",
+      "Bash(curl -s \"http://localhost:5204/cors-proxy\")",
+      "Bash(curl -s --max-time 8 \"http://localhost:5204/cors-proxy?url=https%3A%2F%2Fimjuya.github.io%2Fjuya-ai-daily%2Frss.xml\")"
+    ]
+  },
+  "outputStyle": "Explanatory"
+}
