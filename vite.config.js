@@ -17,7 +17,10 @@ function corsProxyPlugin() {
 
         try {
           const upstream = await fetch(targetUrl, {
-            headers: { 'User-Agent': 'RSSReader/1.0' }
+            headers: {
+              'User-Agent': 'RSSReader/1.0',
+              'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml'
+            }
           })
           if (!upstream.ok) {
             res.statusCode = upstream.status

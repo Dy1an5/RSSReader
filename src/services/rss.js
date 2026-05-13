@@ -12,11 +12,26 @@ function proxyUrl(url) {
   return `/cors-proxy?url=${encodeURIComponent(url)}`
 }
 
+const FEED_HEADERS = { 'User-Agent': 'RSSReader/1.0', 'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml' }
+
 async function fetchXml(url) {
   // In Capacitor (Android), use native HTTP to bypass CORS
   if (isCapacitor()) {
     const { CapacitorHttp } = await import('@capacitor/core')
-    const res = await CapacitorHttp.get({ url, connectTimeout: 10000, readTimeout: 10000 })
+    let res
+    try {
+      res = await CapacitorHttp.get({
+        url,
+        headers: FEED_HEADERS,
+        connectTimeout: 10000,
+        readTimeout: 15000
+      })
+    } catch (e) {
+      throw new Error(`网络请求失败: ${e.message}`)
+    }
+    if (res.status < 200 || res.status >= 300) {
+      throw new Error(`HTTP ${res.status}: 服务器返回错误状态码`)
+    }
     return res.data
   }
 
@@ -24,7 +39,10 @@ async function fetchXml(url) {
   const controller = new AbortController()
   const timeout = setTimeout(() => controller.abort(), 15000)
   try {
-    const res = await fetch(proxyUrl(url), { signal: controller.signal })
+    const res = await fetch(proxyUrl(url), {
+      signal: controller.signal,
+      headers: FEED_HEADERS
+    })
     if (!res.ok) throw new Error(`HTTP ${res.status}: ${res.statusText}`)
     return res.text()
   } finally {
